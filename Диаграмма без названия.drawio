@@ -1,23 +1,176 @@
-<mxfile host="app.diagrams.net" modified="2024-05-20T17:36:11.012Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="aaicBQOXIb-kT8C8uKA7" version="24.4.4" type="github">
+<mxfile host="app.diagrams.net" modified="2024-05-20T17:47:38.746Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="ZTcQ4Sk9bUw7bcgf7dYq" version="24.4.4" type="github">
   <diagram name="Page-1" id="efa7a0a1-bf9b-a30e-e6df-94a7791c09e9">
     <mxGraphModel dx="1195" dy="630" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="826" pageHeight="1169" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="19" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;&lt;strong&gt;md UserRole&lt;/strong&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;IdCompany&lt;br&gt;Name&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Description&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;CreatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;UpdatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Enabled&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;strokeColor=#003366;shadow=1;fillColor=#D4E1F5;fontColor=#003366" parent="1" vertex="1">
-          <mxGeometry x="600.0000000000001" y="325.00000000000045" width="160" height="120" as="geometry" />
+          <mxGeometry x="400.0000000000001" y="30.000000000000455" width="160" height="120" as="geometry" />
         </mxCell>
         <mxCell id="20" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;&lt;strong&gt;md Message&lt;/strong&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Name&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Description&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;CreatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;UpdatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Enabled&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;strokeColor=#003366;shadow=1;fillColor=#D4E1F5;fontColor=#003366" parent="1" vertex="1">
-          <mxGeometry x="310.00000000000006" y="302.4999999999998" width="160" height="125" as="geometry" />
+          <mxGeometry x="210.00000000000006" y="29.999999999999773" width="160" height="125" as="geometry" />
         </mxCell>
         <mxCell id="21" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;&lt;strong&gt;Shedule&lt;/strong&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;IdCalendar&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;IdCompany&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Name&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Description&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;ValidUntil&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;CreatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;UpdatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Enabled&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;strokeColor=#003366;shadow=1;fillColor=#D4E1F5;fontColor=#003366" parent="1" vertex="1">
-          <mxGeometry x="90.00000000000003" y="329.99999999999983" width="160" height="160" as="geometry" />
+          <mxGeometry x="20.00000000000003" y="29.99999999999983" width="160" height="160" as="geometry" />
         </mxCell>
         <mxCell id="24" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;&lt;strong&gt;md User&lt;/strong&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;IdClient&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;IdCompany&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Name&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Description&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;CreatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;UpdatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Enabled&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;strokeColor=#003366;shadow=1;fillColor=#D4E1F5;fontColor=#003366" parent="1" vertex="1">
-          <mxGeometry x="310.0000000000002" y="556.9600000000006" width="160" height="150" as="geometry" />
+          <mxGeometry x="210.00000000000023" y="180.00000000000063" width="160" height="150" as="geometry" />
         </mxCell>
         <mxCell id="29" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;&lt;b&gt;md Recipient&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;IdProject&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;IdClient&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Name&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Description&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;StartDate&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;EndDate&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;CreatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;UpdatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Enabled&lt;br&gt;IdProjectManager&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;strokeColor=#003366;shadow=1;fillColor=#D4E1F5;fontColor=#003366" parent="1" vertex="1">
-          <mxGeometry x="591.0800000000003" y="531.9600000000007" width="160" height="200" as="geometry" />
+          <mxGeometry x="590.0000000000002" y="30.00000000000074" width="160" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-114" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;&lt;strong&gt;Shedule&lt;/strong&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;IdCalendar&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;IdCompany&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Name&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Description&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;ValidUntil&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;CreatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;UpdatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Enabled&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;strokeColor=#003366;shadow=1;fillColor=#D4E1F5;fontColor=#003366" vertex="1" parent="1">
+          <mxGeometry x="20.00000000000003" y="219.99999999999977" width="160" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-117" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="40" y="1170" width="120" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-115" value="" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-117">
+          <mxGeometry y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-116" value="tmp Main" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-117">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-118" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="193" y="1170" width="120" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-119" value="" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-118">
+          <mxGeometry y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-120" value="tmp MessageCreate" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-118">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-121" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="350" y="1170" width="120" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-122" value="" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-121">
+          <mxGeometry y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-123" value="tmp RecipientAdd" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-121">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-124" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="500" y="1170" width="120" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-125" value="" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-124">
+          <mxGeometry y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-126" value="tmp PostsList" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-124">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-130" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="30" y="510" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-140" value="" style="group" vertex="1" connectable="0" parent="tAbogdoDWOYnwLUMiY5Q-130">
+          <mxGeometry width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-128" value="" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-140">
+          <mxGeometry y="10" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-129" value="vw Main" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-140">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-131" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="180" y="510" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-132" value="" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-131">
+          <mxGeometry y="10" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-133" value="vw MessageCreate" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-131">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-134" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="350" y="510" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-135" value="" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-134">
+          <mxGeometry y="10" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-136" value="vw RecipinetAdd" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-134">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-137" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="490" y="510" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-138" value="" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-137">
+          <mxGeometry y="10" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-139" value="vw PostsList" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-137">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-141" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="640" y="510" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-142" value="" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-141">
+          <mxGeometry y="10" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-143" value="vw PostCreate" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-141">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-144" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="650" y="1170" width="120" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-145" value="" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-144">
+          <mxGeometry y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-146" value="tmp PostCreate" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-144">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-147" value="&lt;p style=&quot;margin: 0px; margin-top: 4px; text-align: center; text-decoration: underline;&quot;&gt;&lt;b&gt;md PostsLogs&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;IdProject&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;IdClient&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Name&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Description&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;StartDate&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;EndDate&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;CreatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;UpdatedAt&lt;/p&gt;&lt;p style=&quot;margin: 0px; margin-left: 8px;&quot;&gt;Enabled&lt;br&gt;IdProjectManager&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;strokeColor=#003366;shadow=1;fillColor=#D4E1F5;fontColor=#003366" vertex="1" parent="1">
+          <mxGeometry x="590.0000000000002" y="250.00000000000074" width="160" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-148" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="350" y="1040" width="120" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-149" value="" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-148">
+          <mxGeometry y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-150" value="tmp RecipientsList" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-148">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-151" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="350" y="1300" width="120" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-152" value="" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-151">
+          <mxGeometry y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-153" value="tmp RecipientDetailed" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-151">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-154" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="350" y="1430" width="120" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-155" value="" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-154">
+          <mxGeometry y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-156" value="tmp RecipientUpdate" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-154">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-157" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="350" y="610" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-158" value="" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-157">
+          <mxGeometry y="10" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-159" value="vw RecipinetUpdate" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-157">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-160" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="350" y="710" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-161" value="" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-160">
+          <mxGeometry y="10" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-162" value="vw RecipinetDelete" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-160">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-163" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="350" y="810" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-164" value="" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-163">
+          <mxGeometry y="10" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tAbogdoDWOYnwLUMiY5Q-165" value="vw RecipinetAdd" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="tAbogdoDWOYnwLUMiY5Q-163">
+          <mxGeometry width="120" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
