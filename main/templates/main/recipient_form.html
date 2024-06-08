@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-6">
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">Добавление получателя рассылки</h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-12 col-form-label">
+                        <div class="card-body ">
+                            <form method="post" enctype="multipart/form-data"
+                                  class="col-12 col-form-label form-floating">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-success">Сохранить</button>
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    {% include 'main/includes/inc_list.html' %}
+</div>
+
+    {% endblock %}
