@@ -7,23 +7,6 @@ from users.models import User
 NULLABLE = {'blank': True, 'null': True}
 
 
-'''class Company(models.Model):
-    name = models.CharField(max_length=250, verbose_name='Название компании')
-    description = models.TextField(verbose_name='Описание', **NULLABLE)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
-    enabled = models.BooleanField(default=True, verbose_name='Активен')
-    objects = models.Manager()
-
-    def __str__(self):
-        return f'{self.name} ({self.description})'
-
-    class Meta:
-        verbose_name = 'Компания'
-        verbose_name_plural = 'Компании'
-'''
-
-
 class Recipient(models.Model):
     name = models.CharField(max_length=250, verbose_name='Имя')
     email = models.EmailField(unique=True, verbose_name="Email")

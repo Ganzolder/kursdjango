@@ -15,23 +15,14 @@
                     </div>
                     <div class="card-body">
 
-                        <ul class="list-unstyled mt-3 mb-4 text-start">
-                            <li>{{text}}</li>
-
-                        </ul>
-                        <ul class="list-unstyled mt-3 mb-4 text-end">
-
-                            <li>{{creator}}</li>
-                            <li>Добавлен: {{object.created_at}}</li>
-                            <li>Изменён: {{object.updated_at}}</li>
-                            <li>Статус: {{enabled}}</li>
-                        </ul>
-                        <a href="{% url 'main:message_update' object.pk %}" type="button" class="w-100 mb-4 btn btn-lg btn-outline-primary">Редакитровать</a>
                         <form method="post" action="">
+
                             {% csrf_token %}
-                            <a href="{% url 'main:message_delete' object.pk %}" type="submit"
-                               class="w-100 btn btn-lg btn-outline-danger mb-4">Удалить</a>
+                            <p>Вы уверены, что хотите удалить этот объект?</p>
+                            <button type="submit" class="w-100 mb-4 btn btn-lg btn-outline-primary">Да, удалить</button>
+                            <a class="w-100 mb-4 btn btn-lg btn-secondary" href="{% url 'main:post_update' object.pk %}">Нет</a>
                         </form>
+
                     </div>
                 </div>
             </div>

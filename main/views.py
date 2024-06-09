@@ -1,6 +1,7 @@
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils.dateparse import parse_datetime
-from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, TemplateView, CreateView, UpdateView, DeleteView
 
 from main.forms import RecipientForm, MessageForm, PostForm
 from main.models import Recipient, Message, Post
@@ -28,12 +29,12 @@ class RecipientCreateView(CreateView):
     success_url = reverse_lazy('main:recipient_form')
 
     def get_context_data(self, *args, **kwargs):
-        # recipient_list = Recipient.objects.filter(creator=self.request.user)
+
         context_data = super().get_context_data(*args, **kwargs)
-        context_data['objects_list'] = Recipient.objects.filter(creator=self.request.user)
+        context_data['objects_list'] = Recipient.objects.filter(creator=self.request.user).order_by('-enabled')
         context_data['title'] = f'Список адресатов в базе'
         context_data['object_type'] = 'recipient'
-        # context_data['recipient_list'] = recipient_list
+
         return context_data
 
     def form_valid(self, form):
@@ -63,22 +64,56 @@ class RecipientDetailView(DetailView):
 
         return context_data
 
-"""
-class RecipientListView(ListView):
+
+class RecipientUpdateView(UpdateView):
 
     model = Recipient
+    form_class = RecipientForm
 
-    def get_queryset(self):
-        return super().get_queryset()
+    """permission_required = 'catalog:add_product'"""
+    success_url = reverse_lazy('main:recipient_form')
 
     def get_context_data(self, *args, **kwargs):
         # recipient_list = Recipient.objects.filter(creator=self.request.user)
         context_data = super().get_context_data(*args, **kwargs)
-
-        context_data['title'] = f'Список адресатов'
+        context_data['objects_list'] = Recipient.objects.filter(creator=self.request.user).order_by('-enabled')
+        context_data['title'] = f'Список адресатов в базе'
+        context_data['object_type'] = 'recipient'
         # context_data['recipient_list'] = recipient_list
         return context_data
-"""
+
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.creator = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
+
+class RecipientDeleteView(DeleteView):
+
+    model = Recipient
+
+    success_url = reverse_lazy('main:recipient_form')
+
+    def post(self, request, *args, **kwargs):
+        # Получаем объект по первичному ключу (pk)
+        obj = get_object_or_404(Recipient, pk=kwargs['pk'])
+
+        # Удаляем объект
+        obj.delete()
+
+        # Перенаправляем на нужную страницу после удаления
+        return redirect('main:recipient_form')
+
+
+class RecipientConfirmDeleteView(TemplateView):
+    template_name = 'main/recipient_confirm_delete.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = get_object_or_404(Recipient, pk=kwargs['pk'])
+        return context
+
 
 class MessageCreateView(CreateView):
 
@@ -97,30 +132,37 @@ class MessageCreateView(CreateView):
     def get_context_data(self, *args, **kwargs):
         # recipient_list = Recipient.objects.filter(creator=self.request.user)
         context_data = super().get_context_data(*args, **kwargs)
-        context_data['objects_list'] = Message.objects.filter(creator=self.request.user)
+        context_data['objects_list'] = Message.objects.filter(creator=self.request.user).order_by('-enabled')
         context_data['title'] = f'Список адресатов в базе'
         context_data['object_type'] = 'message'
         # context_data['recipient_list'] = recipient_list
         return context_data
 
-"""
-class MessageListView(ListView):
+
+class MessageUpdateView(UpdateView):
 
     model = Message
+    form_class = MessageForm
 
-    def get_queryset(self):
-        return super().get_queryset()
+    """permission_required = 'catalog:add_product'"""
+    success_url = reverse_lazy('main:message_form')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.creator = self.request.user
+        self.object.save()
+        return super().form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         # recipient_list = Recipient.objects.filter(creator=self.request.user)
         context_data = super().get_context_data(*args, **kwargs)
-
-        print(context_data['objects_list'])
-        context_data['title'] = f'Список адресатов'
+        context_data['objects_list'] = Message.objects.filter(creator=self.request.user).order_by('-enabled')
+        context_data['title'] = f'Список адресатов в базе'
+        context_data['object_type'] = 'message'
         # context_data['recipient_list'] = recipient_list
         return context_data
 
-"""
+
 class MessageDetailView(DetailView):
     model = Message
     template_name = 'main/message_detail.html'
@@ -141,6 +183,30 @@ class MessageDetailView(DetailView):
         return context_data
 
 
+class MessageDeleteView(DeleteView):
+
+    model = Message
+
+    success_url = reverse_lazy('main:message_form')
+
+    def post(self, request, *args, **kwargs):
+        # Получаем объект по первичному ключу (pk)
+        obj = get_object_or_404(Message, pk=kwargs['pk'])
+
+        # Удаляем объект
+        obj.delete()
+
+        # Перенаправляем на нужную страницу после удаления
+        return redirect('main:message_form')
+
+
+class MessageConfirmDeleteView(TemplateView):
+    template_name = 'main/message_confirm_delete.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = get_object_or_404(Message, pk=kwargs['pk'])
+        return context
 
 
 class PostCreateView(CreateView):
@@ -159,7 +225,22 @@ class PostCreateView(CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.creator = self.request.user
-        self.object.start_at = make_aware(parse_datetime(self.request.POST['start_at']))
+
+        start_at_str = self.request.POST.get('start_at')
+
+        if start_at_str:
+            start_at = parse_datetime(start_at_str)
+            self.object.start_at = make_aware(start_at)
+        else:
+            form.add_error('start_at', 'Заполните поле даты и времени.')
+            return self.form_invalid(form)
+
+        message = self.request.POST.get('message')
+
+        if not message:
+            form.add_error('message', 'Заполните поле сообщения.')
+            return self.form_invalid(form)
+
         self.object.save()
         form.save_m2m()
         return super().form_valid(form)
@@ -167,7 +248,7 @@ class PostCreateView(CreateView):
     def get_context_data(self, *args, **kwargs):
         # recipient_list = Recipient.objects.filter(creator=self.request.user)
         context_data = super().get_context_data(*args, **kwargs)
-        context_data['objects_list'] = Post.objects.filter(creator=self.request.user)
+        context_data['objects_list'] = Post.objects.filter(creator=self.request.user).order_by('-enabled')
         context_data['title'] = f'Список рассылок в базе'
         context_data['object_type'] = 'post'
         # context_data['recipient_list'] = recipient_list
@@ -201,3 +282,76 @@ class PostDetailView(DetailView):
         context_data['start_at'] = message.start_at
 
         return context_data
+
+
+class PostUpdateView(UpdateView):
+
+    model = Post
+    form_class = PostForm
+
+    """permission_required = 'catalog:add_product'"""
+    success_url = reverse_lazy('main:post_form')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.creator = self.request.user
+
+        start_at_str = self.request.POST.get('start_at')
+
+        if start_at_str:
+            start_at = parse_datetime(start_at_str)
+            self.object.start_at = make_aware(start_at)
+        else:
+            form.add_error('start_at', 'Заполните поле даты и времени.')
+            return self.form_invalid(form)
+
+        message = self.request.POST.get('message')
+
+        if not message:
+            form.add_error('message', 'Заполните поле сообщения.')
+            return self.form_invalid(form)
+
+        self.object.start_at = make_aware(parse_datetime(self.request.POST['start_at']))
+        self.object.save()
+        form.save_m2m()
+        return super().form_valid(form)
+
+    def get_context_data(self, *args, **kwargs):
+        # recipient_list = Recipient.objects.filter(creator=self.request.user)
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['objects_list'] = Post.objects.filter(creator=self.request.user).order_by('-enabled')
+        context_data['title'] = f'Список рассылок в базе'
+        context_data['object_type'] = 'post'
+        # context_data['recipient_list'] = recipient_list
+        return context_data
+
+
+class PostDeleteView(DeleteView):
+
+    model = Post
+
+    success_url = reverse_lazy('main:post_form')
+
+    def post(self, request, *args, **kwargs):
+        # Получаем объект по первичному ключу (pk)
+        obj = get_object_or_404(Post, pk=kwargs['pk'])
+
+        # Удаляем объект
+        obj.delete()
+
+        # Перенаправляем на нужную страницу после удаления
+        return redirect('main:post_form')
+
+
+class PostConfirmDeleteView(TemplateView):
+    template_name = 'main/post_confirm_delete.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = get_object_or_404(Post, pk=kwargs['pk'])
+        return context

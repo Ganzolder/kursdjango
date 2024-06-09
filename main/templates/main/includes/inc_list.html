@@ -10,26 +10,49 @@
                         <ul>
                             {% if object_type == 'recipient' %}
                             {% for object in objects_list %}
-                            <li class="w-100 btn btn-lg btn-outline-dark mb-3" >
+                            {% if object.enabled is True %}
+                            <li class="w-100 btn btn-lg btn-success mb-3 ">
                                 <a href="{% url 'main:'|add:object_type|add:'_detail' object.id %}"
                                    style="text-decoration: none; color: inherit;">{{ object.name }} -
-                                {{ object.email }}</a></li>
+                                    {{ object.email }}</a></li>
+                            {% else %}
+                            <li class="w-100 btn btn-lg btn-outline-dark mb-3 ">
+                                <a href="{% url 'main:'|add:object_type|add:'_detail' object.id %}"
+                                   style="text-decoration: none; color: inherit;">{{ object.name }} -
+                                    {{ object.email }}</a></li>
+                            {% endif %}
                             {% endfor %}
                             {% endif %}
+
                             {% if object_type == 'message' %}
                             {% for object in objects_list %}
+                            {% if object.enabled is True %}
+                            <li class="w-100 btn btn-lg btn-success mb-3">
+                                <a href="{% url 'main:'|add:object_type|add:'_detail' object.id %}"
+                                   style="text-decoration: none; color: inherit;">{{ object.subject }} -
+                                    {{ object.text|truncatechars_html:150 }}</a></li>
+                            {% else %}
                             <li class="w-100 btn btn-lg btn-outline-dark mb-3">
                                 <a href="{% url 'main:'|add:object_type|add:'_detail' object.id %}"
                                    style="text-decoration: none; color: inherit;">{{ object.subject }} -
-                                {{ object.text|truncatechars_html:150 }}</a></li>
+                                    {{ object.text|truncatechars_html:150 }}</a></li>
+                            {% endif %}
                             {% endfor %}
                             {% endif %}
+
                             {% if object_type == 'post' %}
                             {% for object in objects_list %}
+                            {% if object.enabled is True %}
+                            <li class="w-100 btn btn-lg btn-success mb-3">
+                                <a href="{% url 'main:'|add:object_type|add:'_detail' object.id %}"
+                                   style="text-decoration: none; color: inherit;">{{ object.name }} -
+                                    {{ object.description|truncatechars_html:150 }}</a></li>
+                            {% else %}
                             <li class="w-100 btn btn-lg btn-outline-dark mb-3">
                                 <a href="{% url 'main:'|add:object_type|add:'_detail' object.id %}"
                                    style="text-decoration: none; color: inherit;">{{ object.name }} -
-                                {{ object.description|truncatechars_html:150 }}</a></li>
+                                    {{ object.description|truncatechars_html:150 }}</a></li>
+                            {% endif %}
                             {% endfor %}
                             {% endif %}
 

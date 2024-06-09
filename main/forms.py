@@ -18,21 +18,21 @@ class RecipientForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Recipient
-        fields = ('name', 'email', 'description')
+        fields = ('name', 'email', 'description', 'enabled')
 
 
 class MessageForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Message
-        fields = ('subject', 'text')
+        fields = ('subject', 'text', 'enabled')
 
 
 class PostForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('recipient', 'message', 'name', 'start_at', 'description', 'period')
+        fields = ('recipient', 'message', 'name', 'start_at', 'description', 'period', 'enabled')
         widgets = {
             'recipient': forms.SelectMultiple(),
             'start_at': forms.DateTimeInput(attrs={'type': 'datetime-local'}),

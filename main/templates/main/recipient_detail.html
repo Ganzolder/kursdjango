@@ -26,7 +26,13 @@
                             <li>Изменён: {{object.updated_at}}</li>
                             <li>Статус: {{enabled}}</li>
                         </ul>
-                        <button type="button" class="w-100 btn btn-lg btn-outline-primary">Добавить адресата</button>
+                        <a href="{% url 'main:recipient_update' object.pk %}" type="button"
+                           class="w-100 btn btn-lg btn-outline-primary mb-4">Редактировать</a>
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <a href="{% url 'main:recipient_delete' object.pk %}" type="submit"
+                               class="w-100 btn btn-lg btn-outline-danger mb-4">Удалить</a>
+                        </form>
                     </div>
                 </div>
             </div>
