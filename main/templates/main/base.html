@@ -157,11 +157,25 @@
             </a>
 
             <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:recipient_form' %}">Адресаты</a>
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:message_form' %}">Сообщения</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:recipient_form' %}">Мои адресаты</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:message_form' %}">Мои сообщения</a>
                 <a class="me-3 py-2 link-body-emphasis text-decoration-none"
-                   href="{% url 'main:post_form' %}">Рассылки</a>
-                <a class="py-2 link-body-emphasis text-decoration-none" href="{% url 'users:login' %}">Вход</a>
+                   href="{% url 'main:post_form' %}">Мои рассылки</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:post_logs' %}">Логи рассылки</a>
+
+                {% if perms.main.view_users %}
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:recipient_list' %}">Все адресаты</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:user_list' %}">Все адресаты</a>
+                {% endif %}
+
+
+                {% if user.is_authenticated %}
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'users:logout' %}">Выход</a>
+                {% else %}
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'users:login' %}">Вход</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'users:register' %}">Регистрация</a>
+                {% endif %}
+
             </nav>
         </div>
 

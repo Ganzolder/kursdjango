@@ -1,0 +1,61 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container py-3">
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal text-body-emphasis">Лог рассылок</h1>
+        <p class="fs-5 text-body-secondary"></p>
+    </div>
+    <main>
+        <div class="row row-cols-1 text-center d-flex justify-content-center align-items-center">
+            <div class="col-md-12">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal"></h4>
+                    </div>
+                    <div class="card-body">
+
+                        <ul class="list-unstyled mt-3 mb-4 text-start">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Дата</th>
+                                    <th scope="col">Название рассылки</th>
+                                    <th scope="col">Состояние</th>
+                                    <th scope="col">Ошибка</th>
+                                </tr>
+                                <tbody>
+                                {% for object in post %}
+
+
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ object.try_date }}</td>
+                                    <td><a href="{% url 'main:'|add:object_type|add:'_detail' object.post.pk %}">{{ object.post }}</a></td>
+                                    <td>{{ object.result }}</td>
+                                    <td>{{ object.error_message }}</td>
+                                </tr>
+
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+
+                        </ul>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <footer class="pt-4 my-md-5 pt-md-5 border-top">
+                <div class="row">
+
+                </div>
+            </footer>
+        </div>
+
+    </main>
+</div>
+{% endblock %}

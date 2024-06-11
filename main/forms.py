@@ -32,7 +32,7 @@ class PostForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('recipient', 'message', 'name', 'start_at', 'description', 'period', 'enabled')
+        fields = ('recipient', 'message', 'name', 'start_at', 'next_send_date' , 'description', 'status', 'period', 'enabled')
         widgets = {
             'recipient': forms.SelectMultiple(),
             'start_at': forms.DateTimeInput(attrs={'type': 'datetime-local'}),

@@ -1,5 +1,5 @@
-from datetime import datetime
-
+from datetime import timedelta
+from django.utils import timezone
 from django.db import models
 from django.conf import settings
 from users.models import User
@@ -70,6 +70,7 @@ class Post(models.Model):
 
     STATUS_CHOICES = [
         ('draft', 'Черновик'),
+        ('created', 'Создано и готово к рассылке'),
         ('published', 'В рассылке'),
         ('canceled', 'Отменено'),
     ]
@@ -85,6 +86,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
     enabled = models.BooleanField(default=True, verbose_name='Активен')
+    next_send_date = models.DateTimeField(verbose_name='Дата следующей отправки', null=True, blank=True)
+    last_send_status = models.CharField(max_length=50, verbose_name='Статус последней отправки', null=True, blank=True)
     objects = models.Manager()
 
     def __str__(self):
@@ -121,10 +124,12 @@ class Result(models.Model):
 class PostLogs(models.Model):
     post = models.ForeignKey(Post, verbose_name='Рассылка', on_delete=models.SET_NULL, **NULLABLE)
     try_date = models.DateTimeField(verbose_name='Дата попытки')
-    result = models.ForeignKey(Result, verbose_name='Результат попытки', on_delete=models.SET_NULL, **NULLABLE)
+    result = models.CharField(max_length=50, verbose_name='Результат попытки', **NULLABLE, choices=[('success', 'Успех'), ('failed', 'Ошибка')])
+    error_message = models.TextField(null=True, blank=True)
+    objects = models.Manager()
 
     def __str__(self):
-        return f'{self.post} {self.try_date}'
+        return f'{self.post} -> ({self.try_date})'
 
     class Meta:
         verbose_name = 'Лог рассылки'

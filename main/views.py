@@ -1,15 +1,34 @@
+import smtplib
+
+import pytz
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
+from django.core.mail import send_mail
+from django.utils import timezone
+import datetime as dt
+
+
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils.dateparse import parse_datetime
-from django.views.generic import DetailView, TemplateView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, TemplateView, CreateView, UpdateView, DeleteView, ListView
 
+from apscheduler.schedulers.background import BackgroundScheduler
+from django.conf import settings
+
+import users
 from main.forms import RecipientForm, MessageForm, PostForm
-from main.models import Recipient, Message, Post
+from main.models import Recipient, Message, Post, PostLogs
 from django.utils.timezone import make_aware
 
+from users.models import User
 
-class IndexView(TemplateView):
+
+class IndexView(LoginRequiredMixin, TemplateView):
     template_name = 'main/index.html'
+    login_url = reverse_lazy('users:login')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -20,9 +39,10 @@ class IndexView(TemplateView):
         return context
 
 
-class RecipientCreateView(CreateView):
-
+class RecipientCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('users:login')
     model = Recipient
+
     form_class = RecipientForm
 
     """permission_required = 'catalog:add_product'"""
@@ -44,7 +64,7 @@ class RecipientCreateView(CreateView):
         return super().form_valid(form)
 
 
-class RecipientDetailView(DetailView):
+class RecipientDetailView(LoginRequiredMixin, DetailView):
     model = Recipient
     template_name = 'main/recipient_detail.html'
 
@@ -65,7 +85,7 @@ class RecipientDetailView(DetailView):
         return context_data
 
 
-class RecipientUpdateView(UpdateView):
+class RecipientUpdateView(LoginRequiredMixin, UpdateView):
 
     model = Recipient
     form_class = RecipientForm
@@ -89,7 +109,7 @@ class RecipientUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class RecipientDeleteView(DeleteView):
+class RecipientDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Recipient
 
@@ -106,7 +126,7 @@ class RecipientDeleteView(DeleteView):
         return redirect('main:recipient_form')
 
 
-class RecipientConfirmDeleteView(TemplateView):
+class RecipientConfirmDeleteView(LoginRequiredMixin, TemplateView):
     template_name = 'main/recipient_confirm_delete.html'
 
     def get_context_data(self, **kwargs):
@@ -115,7 +135,33 @@ class RecipientConfirmDeleteView(TemplateView):
         return context
 
 
-class MessageCreateView(CreateView):
+class MessageCreateView(LoginRequiredMixin, CreateView):
+
+    model = Message
+    form_class = MessageForm
+
+    login_url = reverse_lazy('users:login')
+
+    """permission_required = 'catalog:add_product'"""
+    success_url = reverse_lazy('main:message_form')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.creator = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, *args, **kwargs):
+
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['objects_list'] = Message.objects.filter(creator=self.request.user).order_by('-enabled')
+        context_data['title'] = f'Список адресатов в базе'
+        context_data['object_type'] = 'message'
+
+        return context_data
+
+
+class MessageUpdateView(LoginRequiredMixin, UpdateView):
 
     model = Message
     form_class = MessageForm
@@ -139,31 +185,7 @@ class MessageCreateView(CreateView):
         return context_data
 
 
-class MessageUpdateView(UpdateView):
-
-    model = Message
-    form_class = MessageForm
-
-    """permission_required = 'catalog:add_product'"""
-    success_url = reverse_lazy('main:message_form')
-
-    def form_valid(self, form):
-        self.object = form.save()
-        self.object.creator = self.request.user
-        self.object.save()
-        return super().form_valid(form)
-
-    def get_context_data(self, *args, **kwargs):
-        # recipient_list = Recipient.objects.filter(creator=self.request.user)
-        context_data = super().get_context_data(*args, **kwargs)
-        context_data['objects_list'] = Message.objects.filter(creator=self.request.user).order_by('-enabled')
-        context_data['title'] = f'Список адресатов в базе'
-        context_data['object_type'] = 'message'
-        # context_data['recipient_list'] = recipient_list
-        return context_data
-
-
-class MessageDetailView(DetailView):
+class MessageDetailView(LoginRequiredMixin, DetailView):
     model = Message
     template_name = 'main/message_detail.html'
 
@@ -183,7 +205,7 @@ class MessageDetailView(DetailView):
         return context_data
 
 
-class MessageDeleteView(DeleteView):
+class MessageDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Message
 
@@ -200,7 +222,7 @@ class MessageDeleteView(DeleteView):
         return redirect('main:message_form')
 
 
-class MessageConfirmDeleteView(TemplateView):
+class MessageConfirmDeleteView(LoginRequiredMixin, TemplateView):
     template_name = 'main/message_confirm_delete.html'
 
     def get_context_data(self, **kwargs):
@@ -209,10 +231,12 @@ class MessageConfirmDeleteView(TemplateView):
         return context
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
 
     model = Post
     form_class = PostForm
+
+    login_url = reverse_lazy('users:login')
 
     """permission_required = 'catalog:add_product'"""
     success_url = reverse_lazy('main:post_form')
@@ -255,7 +279,7 @@ class PostCreateView(CreateView):
         return context_data
 
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'main/post_detail.html'
 
@@ -280,16 +304,16 @@ class PostDetailView(DetailView):
         context_data['post_status'] = message.status
         context_data['period'] = message.period
         context_data['start_at'] = message.start_at
+        context_data['next_send_date'] = message.next_send_date
 
         return context_data
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
 
     model = Post
     form_class = PostForm
 
-    """permission_required = 'catalog:add_product'"""
     success_url = reverse_lazy('main:post_form')
 
     def get_form_kwargs(self):
@@ -331,7 +355,7 @@ class PostUpdateView(UpdateView):
         return context_data
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Post
 
@@ -348,10 +372,112 @@ class PostDeleteView(DeleteView):
         return redirect('main:post_form')
 
 
-class PostConfirmDeleteView(TemplateView):
+class PostConfirmDeleteView(LoginRequiredMixin, TemplateView):
     template_name = 'main/post_confirm_delete.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['object'] = get_object_or_404(Post, pk=kwargs['pk'])
         return context
+
+
+class SendMailing:
+
+    @staticmethod
+    def send_mailing():
+        zone = pytz.timezone(settings.TIME_ZONE)
+        current_datetime = zone.localize(dt.datetime.now()).replace(second=0, microsecond=0)
+        mailings = Post.objects.filter(status='created').filter(start_at__lte=current_datetime)
+        additional_mailings = Post.objects.filter(status='published').filter(next_send_date__lte=current_datetime)
+        combined_mailings = mailings.union(additional_mailings)
+        mailings = combined_mailings
+        print(mailings)
+
+        if mailings:
+            for mailing in mailings:
+                mailing.status = 'published'
+                mailing.save()
+                try:
+                    server_response = send_mail(
+                        subject=mailing.message.subject,
+                        message=mailing.message.text,
+                        from_email=settings.EMAIL_HOST_USER,
+                        recipient_list=[recipient.email for recipient in mailing.recipient.all()],
+                        fail_silently=False
+                    )
+
+                    if server_response:
+                        PostLogs.objects.create(post=mailing, try_date=current_datetime, result='success')
+                        mailing.next_send_date = current_datetime
+                        if mailing.period == 'daily':
+                            mailing.next_send_date += dt.timedelta(days=1)
+                        elif mailing.period == 'weekly':
+                            mailing.next_send_date += dt.timedelta(days=7)
+                        elif mailing.period == 'monthly':
+                            mailing.next_send_date += dt.timedelta(days=30)
+
+                        mailing.save()
+                    else:
+                        PostLogs.objects.create(post=mailing, try_date=current_datetime, result='failed')
+                except smtplib.SMTPException as err:
+                    PostLogs.objects.create(post=mailing, try_date=current_datetime, result='failed', error_message=err)
+
+
+def start_scheduler():
+    scheduler = BackgroundScheduler()
+    send_mailing_instance = SendMailing()
+    scheduler.add_job(send_mailing_instance.send_mailing, 'interval', seconds=60)  # Запускаем задачу каждые 60 секунд
+    scheduler.start()
+
+
+class PostLogsView(LoginRequiredMixin, TemplateView):
+
+    model = PostLogs
+    template_name = 'main/post_logs.html'
+
+    login_url = reverse_lazy('users:login')
+    success_url = reverse_lazy('main:post_logs')
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+        context['post'] = PostLogs.objects.all()
+        context['object_type'] = 'post'
+
+        return context
+
+
+class RecipientListAdminView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+
+    permission_required = 'view_recipinets'
+
+    login_url = reverse_lazy('users:login')
+    model = Recipient
+
+    success_url = reverse_lazy('main:recipient_list')
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['objects_list'] = Recipient.objects.all()
+        context_data['object_type'] = 'recipient'
+        return context_data
+
+
+class UserListAdminView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+
+    permission_required = 'view_users'
+    template_name = 'main/user_list.html'
+
+    login_url = reverse_lazy('users:login')
+    model = User
+
+    success_url = reverse_lazy('main:index')
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['objects_list'] = User.objects.all()
+        context_data['object_type'] = 'user'
+        return context_data
+
+

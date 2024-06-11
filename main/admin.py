@@ -1,21 +1,24 @@
 from django.contrib import admin
 
-from main.models import Recipient, Message, Post
+from main.models import Recipient, Message, Post, PostLogs
+
 
 # Register your models here.
-'''
-admin.site.register(Post)
-admin.site.register(Message)
-admin.site.register(Recipient)'''
-
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('message', 'name', 'start_at', 'status',)
+    list_display = ('message', 'name', 'start_at', 'next_send_date', 'status', 'period')
+
 
 @admin.register(Message)
 class PostAdmin(admin.ModelAdmin):
     list_display = ('subject', 'text',)
 
+
 @admin.register(Recipient)
 class PostAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'enabled',)
+
+
+@admin.register(PostLogs)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('post', 'try_date', 'result',)

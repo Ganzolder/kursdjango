@@ -10,6 +10,7 @@ class User(AbstractUser):
                              verbose_name="Телефон",
                              blank=True, null=True,
                              help_text="Введите номер телефона")
+    enabled = models.BooleanField(default=True, verbose_name='Активен')
 
     token = models.CharField(max_length=100, verbose_name="Token", blank=True, null=True)
 
@@ -28,6 +29,14 @@ class User(AbstractUser):
             (
                 'view_users',
                 'Can view list of users'
+            ),
+            (
+                'view_recipients',
+                'Can view list of recipients'
+            ),
+            (
+                'view_posts',
+                'Can view list of posts'
             )
         ]
 
