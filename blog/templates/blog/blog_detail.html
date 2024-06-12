@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="container py-3">
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal text-body-emphasis">{{object.title}}</h1>
+        <p class="fs-5 text-body-secondary">{{email}}</p>
+    </div>
+    <main>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+
+                    </div>
+                    <div class="card-body">
+
+                        <div class="col-md-12">
+                            <ul class="list-unstyled mb-3 text-start bg-light p-3">
+                                <h4 class="my-0 fw-normal mb-3 text-center ">{{ object.title }}</h4>
+                                <li>{{ text }}</li>
+
+                            </ul>
+                            <ul class="list-unstyled mb-3 text-start bg-light p-3">
+                                {% if object.picture %}
+                                <img src="{{ object.picture.url }}" alt="{{ object.title }}" class="img-fluid">
+                                {% endif %}
+                                <p class="d-flex justify-content-center">{{ object.body }}</p>
+
+                                <ul class="list-unstyled mt-3 mb-4 text-end">
+
+                                    <li>{{creator}}</li>
+                                    <li>Добавлен: {{object.published_at}}</li>
+
+                                </ul>
+
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+                        <div class="row">
+
+                        </div>
+                    </footer>
+                </div>
+
+    </main>
+</div>
+{% endblock %}

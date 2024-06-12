@@ -1,0 +1,130 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container py-3">
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal text-body-emphasis">{{title}}</h1>
+        <p class="fs-5 text-body-secondary">{{email}}</p>
+    </div>
+    <main>
+        <div class="row row-cols-2">
+            <div class="col-md-12">
+                <div class="card mb-3 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal text-center">Структура рассылки</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled mb-3 text-start bg-light p-3">
+                                    <h4 class="my-0 fw-normal mb-3 text-center ">Описание рассылки:</h4>
+                                    <li>{{ text }}</li>
+
+                                </ul>
+                                <ul class="list-unstyled mb-3 text-start bg-light p-3">
+                                    <h4 class="my-0 fw-normal mb-3 text-center ">Сообщение рассылки:</h4>
+                                    {% if message.id %}
+                                    <li class="d-flex justify-content-center btn btn-lg btn-outline-dark mb-3">
+                                        <a href="{% url 'main:message_detail' message.id %}"
+                                           style="text-decoration: none; color: inherit;">{{ message }}</a>
+                                    </li>
+                                    {% else %}
+                                    <p class="d-flex justify-content-center">Сообщение не добавлено</p>
+                                    {% endif %}
+
+                                </ul>
+                                <ul class="list-unstyled mb-3 text-start bg-light p-3">
+                                    <h4 class="my-0 fw-normal mb-3 text-center ">Статус</h4>
+                                    <li class="d-flex justify-content-center btn btn-lg btn-outline-dark mb-3">
+                                        <a style="text-decoration: none; color: inherit;">
+                                            {% for status, label in object.STATUS_CHOICES %}
+                                            {% if status == object.status %}
+                                            {{ label }}
+                                            {% endif %}
+                                            {% endfor %}
+
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <ul class="list-unstyled mb-3 text-start bg-light p-3">
+                                    <h4 class="my-0 fw-normal mb-3 text-center ">Периодичность рассылки</h4>
+                                    <li class="d-flex justify-content-center btn btn-lg btn-outline-dark mb-3">
+                                        <a style="text-decoration: none; color: inherit;">
+                                            {% for period, label in object.PERIOD_CHOICES %}
+                                            {% if period == object.period %}
+                                            {{ label }}
+                                            {% endif %}
+                                            {% endfor %}
+
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <ul class="list-unstyled mb-3 text-start bg-light p-3">
+                                    <h4 class="my-0 fw-normal mb-3 text-center ">Начало рассылки</h4>
+                                    <li class="d-flex justify-content-center btn btn-lg btn-outline-dark mb-3">
+                                        <a style="text-decoration: none; color: inherit;">{{ start_at }}</a>
+                                    </li>
+
+                                </ul>
+
+                                <ul class="list-unstyled mb-3 text-start bg-light p-3">
+                                    <h4 class="my-0 fw-normal mb-3 text-center ">Дата следующей рассылки</h4>
+                                    <li class="d-flex justify-content-center btn btn-lg btn-outline-dark mb-3">
+                                        <a style="text-decoration: none; color: inherit;">{{ next_send_date }}</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+
+                            <div class="col-md-5 bg-light p-3">
+                                <h4 class="my-0 fw-normal mb-3 text-center ">Получатели</h4>
+                                <div class="d-flex justify-content-center">
+                                    <ul>
+                                        {% for recipient_obj in recipients %}
+                                        <li class="d-flex justify-content-center btn btn-lg btn-outline-dark mb-3">
+                                            <a href="{% url 'main:'|add:object_type|add:'_detail' recipient_obj.id %}"
+                                               style="text-decoration: none; color: inherit;">{{ recipient_obj.name }} -
+                                                {{ recipient_obj.email }}</a></li>
+                                        {% empty %}
+                                        <li>Нет получателей</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="list-unstyled mt-3 mb-4 text-end">
+
+                            <li>{{creator}}</li>
+                            <li>Добавлен: {{object.created_at}}</li>
+                            <li>Изменён: {{object.updated_at}}</li>
+                            <li>Статус: {{enabled}}</li>
+                        </ul>
+                        {% if object.creator == request.user or request.user.is_superuser %}
+                        <a href="{% url 'main:post_update' object.pk %}" type="button"
+                           class="w-100 mb-4 btn btn-lg btn-outline-primary">Редактировать</a>
+                        {% endif %}
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <a href="{% url 'main:post_delete' object.pk %}" type="submit"
+                               class="w-100 mb-4 btn btn-lg btn-outline-danger mb-4">Удалить</a>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <footer class="pt-4 my-md-5 pt-md-5 border-top">
+                <div class="row">
+
+                </div>
+            </footer>
+        </div>
+
+    </main>
+</div>
+{% endblock %}

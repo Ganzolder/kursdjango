@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1>Статьи</h1>
+
+<ul>
+
+</ul>
+
+<div class="container py-3">
+
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal text-body-emphasis">{{ title }}</h1>
+        <p class="fs-5 text-body-secondary">{{ subtitle }}</p>
+    </div>
+    <main>
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+            {% for object in objects_list %}
+
+            <div class="col">
+
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        {% if object.picture %}
+                        <img src="{{ object.picture.url }}" alt="{{ object.title }}" class="img-fluid">
+                        {% endif %}
+                    </div>
+                    <a href="{% url 'main:recipient_form' %}" style="text-decoration: none; color: inherit;">
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">{{num_recipients}}<small
+                                    class="text-body-secondary fw-light"> {{ object.title }}</small></h1>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>{{ object.body|truncatechars_html:150 }}</li>
+
+                            </ul>
+                            <a class="w-100 btn btn-lg btn-outline-dark mb-3"
+                               href="{% url 'blog:blog_detail' object.pk %}">Читать</a>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+{% if perms.users.blog_create %}
+<a href="{% url 'blog:blog_create' %}" type="button"
+   class="w-100 mb-4 btn btn-lg btn-outline-primary">Создать статью</a>
+{% endif %}
+            </div>
+        </footer>
+    </main>
+</div>
+{% endblock %}

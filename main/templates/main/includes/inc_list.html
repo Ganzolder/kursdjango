@@ -1,0 +1,66 @@
+<div class="col-6">
+    <div class="col-12">
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">{{title}}</h4>
+            </div>
+            <div class="card-body">
+                <div class="col-12 col-form-label">
+                    <div class="card-body ">
+                        <ul>
+                            {% if object_type == 'recipient' %}
+                            {% for object in objects_list %}
+                            {% if object.enabled is True %}
+                            <li class="w-100 btn btn-lg btn-success mb-3 ">
+                                <a href="{% url 'main:'|add:object_type|add:'_detail' object.id %}"
+                                   style="text-decoration: none; color: inherit;">{{ object.name }} -
+                                    {{ object.email }}</a></li>
+                            {% else %}
+                            <li class="w-100 btn btn-lg btn-outline-dark mb-3 ">
+                                <a href="{% url 'main:'|add:object_type|add:'_detail' object.id %}"
+                                   style="text-decoration: none; color: inherit;">{{ object.name }} -
+                                    {{ object.email }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+
+                            {% if object_type == 'message' %}
+                            {% for object in objects_list %}
+                            {% if object.enabled is True %}
+                            <li class="w-100 btn btn-lg btn-success mb-3">
+                                <a href="{% url 'main:'|add:object_type|add:'_detail' object.id %}"
+                                   style="text-decoration: none; color: inherit;">{{ object.subject }} -
+                                    {{ object.text|truncatechars_html:150 }}</a></li>
+                            {% else %}
+                            <li class="w-100 btn btn-lg btn-outline-dark mb-3">
+                                <a href="{% url 'main:'|add:object_type|add:'_detail' object.id %}"
+                                   style="text-decoration: none; color: inherit;">{{ object.subject }} -
+                                    {{ object.text|truncatechars_html:150 }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+
+                            {% if object_type == 'post' %}
+                            {% for object in objects_list %}
+                            {% if object.enabled is True %}
+                            <li class="w-100 btn btn-lg btn-success mb-3">
+                                <a href="{% url 'main:'|add:object_type|add:'_detail' object.id %}"
+                                   style="text-decoration: none; color: inherit;">{{ object.name }} -
+                                    {{ object.description|truncatechars_html:150 }}</a></li>
+                            {% else %}
+                            <li class="w-100 btn btn-lg btn-outline-dark mb-3">
+                                <a href="{% url 'main:'|add:object_type|add:'_detail' object.id %}"
+                                   style="text-decoration: none; color: inherit;">{{ object.name }} -
+                                    {{ object.description|truncatechars_html:150 }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                    <div class="card-footer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
