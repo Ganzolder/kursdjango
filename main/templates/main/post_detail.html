@@ -103,8 +103,10 @@
                             <li>Изменён: {{object.updated_at}}</li>
                             <li>Статус: {{enabled}}</li>
                         </ul>
+                        {% if object.creator == request.user or request.user.is_superuser %}
                         <a href="{% url 'main:post_update' object.pk %}" type="button"
                            class="w-100 mb-4 btn btn-lg btn-outline-primary">Редактировать</a>
+                        {% endif %}
                         <form method="post" action="">
                             {% csrf_token %}
                             <a href="{% url 'main:post_delete' object.pk %}" type="submit"

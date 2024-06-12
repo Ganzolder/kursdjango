@@ -3,7 +3,7 @@ from main.apps import MainConfig
 from main.views import RecipientCreateView, MessageCreateView, PostCreateView, IndexView, RecipientDetailView, \
     MessageDetailView, PostDetailView, RecipientUpdateView, MessageUpdateView, PostUpdateView, \
     RecipientConfirmDeleteView, RecipientDeleteView, MessageConfirmDeleteView, MessageDeleteView, PostConfirmDeleteView, \
-    PostDeleteView, PostLogsView, RecipientListAdminView, UserListAdminView
+    PostDeleteView, PostLogsView, RecipientListAdminView, UserListAdminView, PostListAdminView
 
 app_name = MainConfig.name
 
@@ -28,6 +28,7 @@ urlpatterns = [
     path('post/edit/<int:pk>/', PostUpdateView.as_view(), name='post_update'),
     path('post/delete/confirm/<int:pk>/', PostConfirmDeleteView.as_view(), name='post_confirm_delete'),
     path('post/delete/<int:pk>/', PostDeleteView.as_view(), name='post_delete'),
+    path('post/list/', PostListAdminView.as_view(), name='post_list'),
 
     path('post_logs/', PostLogsView.as_view(), name='post_logs'),
     path('user/list/', UserListAdminView.as_view(), name='user_list'),

@@ -3,13 +3,13 @@
 {% block content %}
 <div class="container py-3">
     <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-        <h1 class="display-4 fw-normal text-body-emphasis">Все пользователи </h1>
+        <h1 class="display-4 fw-normal text-body-emphasis">Все рассылки </h1>
         <p class="fs-5 text-body-secondary"></p>
     </div>
     <main>
         <div class="row row-cols-1 text-center d-flex justify-content-center align-items-center">
             <div class="col-md-12">
-                <div class="card mb-4 rounded-3 shadow-sm">
+
                     <div class="card-header py-3">
                         <h4 class="my-0 fw-normal"></h4>
                     </div>
@@ -20,24 +20,32 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Почта</th>
-                                    <th scope="col">Имя пользователя</th>
-                                    <th scope="col">Телефон</th>
+                                    <th scope="col">Автор</th>
+                                    <th scope="col">Имя рассылки</th>
+                                    <th scope="col">Сообщение</th>
+                                    <th scope="col">Описание</th>
+                                    <th scope="col">Начало рассылки</th>
+                                    <th scope="col">Периодичность</th>
+                                    <th scope="col">Статус</th>
+                                    <th scope="col">Добавлена</th>
                                     <th scope="col">Активность</th>
-
+                                    <th scope="col">Дата следующей отправки</th>
                                 </tr>
                                 <tbody>
 
                                 {% for object in objects_list %}
                                 <tr>
                                     <th scope="row">{{ forloop.counter }}</th>
-                                    <td>{{ object.email }}</td>
-                                    <td>{{ object.username }}</td>
-                                    <td>{{ object.phone }}</td>
-                                    <td>
-                                        <!-- Выводим переключатель активности -->
-                                        <input type="checkbox" {% if object.enabled %}checked{% endif %} disabled>
-                                    </td>
+                                    <td>{{ object.creator }}</td>
+                                    <td><a href="{% url 'main:'|add:object_type|add:'_detail' object.pk %}">{{ object.name }}</a></td>
+                                    <td>{{ object.message }}</td>
+                                    <td>{{ object.description }}</td>
+                                    <td>{{ object.start_at }}</td>
+                                    <td>{{ object.period }}</td>
+                                    <td>{{ object.status }}</td>
+                                    <td>{{ object.created_at }}</td>
+                                    <td>{{ object.enabled }}</td>
+                                    <td>{{ object.next_send_date }}</td>
                                 </tr>
 
                                 {% endfor %}
@@ -49,7 +57,7 @@
 
 
                     </div>
-                </div>
+
             </div>
 
             <footer class="pt-4 my-md-5 pt-md-5 border-top">

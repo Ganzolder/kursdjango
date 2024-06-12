@@ -21,4 +21,4 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(PostLogs)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('post', 'try_date', 'result',)
+    list_display = ('post', 'try_date', 'result', 'user', 'error_message')

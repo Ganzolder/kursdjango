@@ -157,17 +157,30 @@
             </a>
 
             <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:recipient_form' %}">Мои адресаты</a>
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:message_form' %}">Мои сообщения</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'blog:blog_list' %}">Блог</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:recipient_form' %}">Мои
+                    адресаты</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:message_form' %}">Мои
+                    сообщения</a>
                 <a class="me-3 py-2 link-body-emphasis text-decoration-none"
                    href="{% url 'main:post_form' %}">Мои рассылки</a>
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:post_logs' %}">Логи рассылки</a>
 
-                {% if perms.main.view_users %}
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:recipient_list' %}">Все адресаты</a>
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:user_list' %}">Все адресаты</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:post_logs' %}">Логи
+                    рассылки</a>
+
+
+
+                {% if perms.users.view_users %}
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:user_list' %}">Все пользователи</a>
                 {% endif %}
-
+                {% if perms.users.view_recipients %}
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:recipient_list' %}">Все
+                    адресаты</a>
+                {% endif %}
+                {% if perms.users.view_posts %}
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'main:post_list' %}">Все
+                    рассылки</a>
+                {% endif %}
 
                 {% if user.is_authenticated %}
                 <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'users:logout' %}">Выход</a>
@@ -180,50 +193,7 @@
         </div>
 
     </header>
-    <!--
-        <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-          <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
-                  id="bd-theme"
-                  type="button"
-                  aria-expanded="false"
-                  data-bs-toggle="dropdown"
-                  aria-label="Toggle theme (auto)">
-            <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
-            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-            <li>
-              <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-                <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#sun-fill"></use></svg>
-                Light
-                <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-              </button>
-            </li>
-            <li>
-              <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="true">
-                <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
-                Dark
-                <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-              </button>
-            </li>
-            <li>
-              <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="false">
-                <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#circle-half"></use></svg>
-                Auto
-                <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-              </button>
-            </li>
-          </ul>
-        </div>
-    -->
-    <!--
-    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-      <symbol id="check" viewBox="0 0 16 16">
-        <title>Check</title>
-        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-      </symbol>
-    </svg>
-    -->
+
     {% block content %}
     {% endblock %}
 

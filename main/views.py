@@ -3,12 +3,11 @@ import smtplib
 import pytz
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 
 from django.core.mail import send_mail
 from django.utils import timezone
 import datetime as dt
-
 
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -49,7 +48,6 @@ class RecipientCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('main:recipient_form')
 
     def get_context_data(self, *args, **kwargs):
-
         context_data = super().get_context_data(*args, **kwargs)
         context_data['objects_list'] = Recipient.objects.filter(creator=self.request.user).order_by('-enabled')
         context_data['title'] = f'Список адресатов в базе'
@@ -86,7 +84,6 @@ class RecipientDetailView(LoginRequiredMixin, DetailView):
 
 
 class RecipientUpdateView(LoginRequiredMixin, UpdateView):
-
     model = Recipient
     form_class = RecipientForm
 
@@ -110,7 +107,6 @@ class RecipientUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class RecipientDeleteView(LoginRequiredMixin, DeleteView):
-
     model = Recipient
 
     success_url = reverse_lazy('main:recipient_form')
@@ -136,7 +132,6 @@ class RecipientConfirmDeleteView(LoginRequiredMixin, TemplateView):
 
 
 class MessageCreateView(LoginRequiredMixin, CreateView):
-
     model = Message
     form_class = MessageForm
 
@@ -152,7 +147,6 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
-
         context_data = super().get_context_data(*args, **kwargs)
         context_data['objects_list'] = Message.objects.filter(creator=self.request.user).order_by('-enabled')
         context_data['title'] = f'Список адресатов в базе'
@@ -162,7 +156,6 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
 
 
 class MessageUpdateView(LoginRequiredMixin, UpdateView):
-
     model = Message
     form_class = MessageForm
 
@@ -206,7 +199,6 @@ class MessageDetailView(LoginRequiredMixin, DetailView):
 
 
 class MessageDeleteView(LoginRequiredMixin, DeleteView):
-
     model = Message
 
     success_url = reverse_lazy('main:message_form')
@@ -232,7 +224,6 @@ class MessageConfirmDeleteView(LoginRequiredMixin, TemplateView):
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
-
     model = Post
     form_class = PostForm
 
@@ -267,6 +258,13 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
         self.object.save()
         form.save_m2m()
+
+        user = User.objects.get(email='gnmsapr24@yandex.ru')
+        print(user.get_all_permissions())  # Права пользователя
+        print(user.groups.all())  # Группы пользователя
+        for group in user.groups.all():
+            print(group.permissions.all())
+
         return super().form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
@@ -310,7 +308,6 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
-
     model = Post
     form_class = PostForm
 
@@ -356,7 +353,6 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
-
     model = Post
 
     success_url = reverse_lazy('main:post_form')
@@ -431,26 +427,26 @@ def start_scheduler():
 
 
 class PostLogsView(LoginRequiredMixin, TemplateView):
-
-    model = PostLogs
     template_name = 'main/post_logs.html'
 
     login_url = reverse_lazy('users:login')
-    success_url = reverse_lazy('main:post_logs')
 
     def get_context_data(self, **kwargs):
 
         context = super().get_context_data(**kwargs)
-
-        context['post'] = PostLogs.objects.all()
+        if self.request.user.has_perm('users.view_post_logs'):
+            context['post'] = PostLogs.objects.filter
+        elif PostLogs.objects.filter(user=self.request.user).exists():
+            context['post'] = PostLogs.objects.filter(user=self.request.user)
+        else:
+            context['post'] = None
         context['object_type'] = 'post'
 
         return context
 
 
 class RecipientListAdminView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-
-    permission_required = 'view_recipinets'
+    permission_required = 'users.view_recipients'
 
     login_url = reverse_lazy('users:login')
     model = Recipient
@@ -465,8 +461,7 @@ class RecipientListAdminView(LoginRequiredMixin, PermissionRequiredMixin, ListVi
 
 
 class UserListAdminView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-
-    permission_required = 'view_users'
+    permission_required = 'users.view_users'
     template_name = 'main/user_list.html'
 
     login_url = reverse_lazy('users:login')
@@ -481,3 +476,18 @@ class UserListAdminView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return context_data
 
 
+class PostListAdminView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = 'users.view_posts'
+    template_name = 'main/post_list.html'
+
+    login_url = reverse_lazy('users:login')
+    model = Post
+
+    success_url = reverse_lazy('main:index')
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        from main.services import get_posts_from_cache
+        context_data['objects_list'] = get_posts_from_cache()
+        context_data['object_type'] = 'post'
+        return context_data

@@ -37,6 +37,18 @@ class User(AbstractUser):
             (
                 'view_posts',
                 'Can view list of posts'
+            ),
+            (
+                'view_post_logs',
+                'Can view log of posts'
+            ),
+            (
+                'block_post',
+                'Can block posts'
+            ),
+            (
+                'blog_create',
+                'Can view create blog post'
             )
         ]
 

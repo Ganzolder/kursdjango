@@ -105,26 +105,11 @@ class Post(models.Model):
     ]
 
 
-class Result(models.Model):
-    post = models.ForeignKey(Post, verbose_name='Рассылка', on_delete=models.SET_NULL, **NULLABLE)
-    try_date = models.DateTimeField(verbose_name='Дата попытки')
-    status = models.CharField(max_length=50, verbose_name='Статус', **NULLABLE)
-    user = models.ForeignKey(User, verbose_name='создатель', on_delete=models.SET_NULL, **NULLABLE)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    objects = models.Manager()
-
-    def __str__(self):
-        return f'{self.post} {self.status}'
-
-    class Meta:
-        verbose_name = 'Результат попытки'
-        verbose_name_plural = 'Результаты попытки'
-
-
 class PostLogs(models.Model):
     post = models.ForeignKey(Post, verbose_name='Рассылка', on_delete=models.SET_NULL, **NULLABLE)
     try_date = models.DateTimeField(verbose_name='Дата попытки')
     result = models.CharField(max_length=50, verbose_name='Результат попытки', **NULLABLE, choices=[('success', 'Успех'), ('failed', 'Ошибка')])
+    user = models.ForeignKey(User, verbose_name='Автор', on_delete=models.SET_NULL, **NULLABLE)
     error_message = models.TextField(null=True, blank=True)
     objects = models.Manager()
 
