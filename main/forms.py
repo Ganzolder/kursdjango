@@ -1,5 +1,5 @@
 from django import forms
-from django.db import models
+
 
 from main.models import Recipient, Message, Post
 
