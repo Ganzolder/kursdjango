@@ -1,11 +1,11 @@
 from django.urls import path
-from main.apps import MainConfig
+from main.apps import SendMailConfig
 from main.views import RecipientCreateView, MessageCreateView, PostCreateView, IndexView, RecipientDetailView, \
     MessageDetailView, PostDetailView, RecipientUpdateView, MessageUpdateView, PostUpdateView, \
     RecipientConfirmDeleteView, RecipientDeleteView, MessageConfirmDeleteView, MessageDeleteView, PostConfirmDeleteView, \
     PostDeleteView, PostLogsView, RecipientListAdminView, UserListAdminView, PostListAdminView
 
-app_name = MainConfig.name
+app_name = SendMailConfig.name
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),

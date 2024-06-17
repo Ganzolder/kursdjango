@@ -2,11 +2,10 @@ import smtplib
 
 import pytz
 
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from django.core.mail import send_mail
-from django.utils import timezone
+
 import datetime as dt
 
 from django.shortcuts import get_object_or_404, redirect
@@ -17,7 +16,6 @@ from django.views.generic import DetailView, TemplateView, CreateView, UpdateVie
 from apscheduler.schedulers.background import BackgroundScheduler
 from django.conf import settings
 
-import users
 from main.forms import RecipientForm, MessageForm, PostForm
 from main.models import Recipient, Message, Post, PostLogs
 from django.utils.timezone import make_aware
@@ -44,7 +42,6 @@ class RecipientCreateView(LoginRequiredMixin, CreateView):
 
     form_class = RecipientForm
 
-    """permission_required = 'catalog:add_product'"""
     success_url = reverse_lazy('main:recipient_form')
 
     def get_context_data(self, *args, **kwargs):
@@ -87,7 +84,6 @@ class RecipientUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipient
     form_class = RecipientForm
 
-    """permission_required = 'catalog:add_product'"""
     success_url = reverse_lazy('main:recipient_form')
 
     def get_context_data(self, *args, **kwargs):
@@ -137,7 +133,6 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
 
     login_url = reverse_lazy('users:login')
 
-    """permission_required = 'catalog:add_product'"""
     success_url = reverse_lazy('main:message_form')
 
     def form_valid(self, form):
@@ -149,7 +144,7 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, *args, **kwargs):
         context_data = super().get_context_data(*args, **kwargs)
         context_data['objects_list'] = Message.objects.filter(creator=self.request.user).order_by('-enabled')
-        context_data['title'] = f'Список адресатов в базе'
+        context_data['title'] = f'Список сообщений в базе'
         context_data['object_type'] = 'message'
 
         return context_data
@@ -159,7 +154,6 @@ class MessageUpdateView(LoginRequiredMixin, UpdateView):
     model = Message
     form_class = MessageForm
 
-    """permission_required = 'catalog:add_product'"""
     success_url = reverse_lazy('main:message_form')
 
     def form_valid(self, form):
@@ -229,7 +223,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     login_url = reverse_lazy('users:login')
 
-    """permission_required = 'catalog:add_product'"""
     success_url = reverse_lazy('main:post_form')
 
     def get_form_kwargs(self):
@@ -259,21 +252,16 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         self.object.save()
         form.save_m2m()
 
-        user = User.objects.get(email='gnmsapr24@yandex.ru')
-        print(user.get_all_permissions())  # Права пользователя
-        print(user.groups.all())  # Группы пользователя
-        for group in user.groups.all():
-            print(group.permissions.all())
-
         return super().form_valid(form)
 
+
     def get_context_data(self, *args, **kwargs):
-        # recipient_list = Recipient.objects.filter(creator=self.request.user)
+
         context_data = super().get_context_data(*args, **kwargs)
         context_data['objects_list'] = Post.objects.filter(creator=self.request.user).order_by('-enabled')
         context_data['title'] = f'Список рассылок в базе'
         context_data['object_type'] = 'post'
-        # context_data['recipient_list'] = recipient_list
+
         return context_data
 
 
@@ -343,12 +331,12 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
-        # recipient_list = Recipient.objects.filter(creator=self.request.user)
+
         context_data = super().get_context_data(*args, **kwargs)
         context_data['objects_list'] = Post.objects.filter(creator=self.request.user).order_by('-enabled')
         context_data['title'] = f'Список рассылок в базе'
         context_data['object_type'] = 'post'
-        # context_data['recipient_list'] = recipient_list
+
         return context_data
 
 
@@ -377,7 +365,7 @@ class PostConfirmDeleteView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class SendMailing:
+"""class SendMailing:
 
     @staticmethod
     def send_mailing():
@@ -387,7 +375,7 @@ class SendMailing:
         additional_mailings = Post.objects.filter(status='published').filter(next_send_date__lte=current_datetime)
         combined_mailings = mailings.union(additional_mailings)
         mailings = combined_mailings
-        print(mailings)
+
 
         if mailings:
             for mailing in mailings:
@@ -416,14 +404,14 @@ class SendMailing:
                     else:
                         PostLogs.objects.create(post=mailing, try_date=current_datetime, result='failed')
                 except smtplib.SMTPException as err:
-                    PostLogs.objects.create(post=mailing, try_date=current_datetime, result='failed', error_message=err)
+                    PostLogs.objects.create(post=mailing, try_date=current_datetime, result='failed', error_message=err)"""
 
 
-def start_scheduler():
+'''def start_scheduler():
     scheduler = BackgroundScheduler()
     send_mailing_instance = SendMailing()
     scheduler.add_job(send_mailing_instance.send_mailing, 'interval', seconds=60)  # Запускаем задачу каждые 60 секунд
-    scheduler.start()
+    scheduler.start()'''
 
 
 class PostLogsView(LoginRequiredMixin, TemplateView):
